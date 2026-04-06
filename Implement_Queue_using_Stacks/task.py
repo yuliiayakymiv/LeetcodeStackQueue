@@ -1,18 +1,32 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
 class Stack:
     def __init__(self):
-        self.items = []
+        self.head = None
 
     def push(self, x):
-        self.items.append(x)
+        new_node = Node(x)
+        new_node.next = self.head
+        self.head = new_node
 
     def pop(self):
-        return self.items.pop()
+        if self.head is None:
+            return None
+        value = self.head.value
+        self.head = self.head.next
+        return value
 
     def peek(self):
-        return self.items[-1]
+        if self.head is None:
+            return None
+        return self.head.value
 
     def empty(self):
-        return len(self.items) == 0
+        return self.head is None
 
 
 class MyQueue:
@@ -26,6 +40,7 @@ class MyQueue:
     def pop(self):
         while not self.stack1.empty():
             self.stack2.push(self.stack1.pop())
+
         result = self.stack2.pop()
 
         while not self.stack2.empty():
@@ -36,6 +51,7 @@ class MyQueue:
     def peek(self):
         while not self.stack1.empty():
             self.stack2.push(self.stack1.pop())
+
         result = self.stack2.peek()
 
         while not self.stack2.empty():
@@ -45,11 +61,3 @@ class MyQueue:
 
     def empty(self):
         return self.stack1.empty()
-
-
-# Your MyQueue object will be instantiated and called as such:
-# obj = MyQueue()
-# obj.push(x)
-# param_2 = obj.pop()
-# param_3 = obj.peek()
-# param_4 = obj.empty()
